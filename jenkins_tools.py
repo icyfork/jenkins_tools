@@ -2,6 +2,15 @@ import click
 import jenkins
 import os
 
+JENKINS_HOST_ADDR = "http://18.237.198.223:8080"
+
+JENKINS_USER = os.environ['JENKINS_USER']
+JENKINS_PASSWORD = os.environ['JENKINS_PASSWORD']
+
+click.echo('Connecting %s by user %s' %(JENKINS_HOST_ADDR,JENKINS_USER))
+server = jenkins.Jenkins(JENKINS_HOST_ADDR, username=JENKINS_USER, password=JENKINS_PASSWORD)
+jobs = server.get_jobs(view_name='All')
+
 @click.group()
 def cli():
     pass
@@ -20,13 +29,6 @@ def build(job_name):
 
 cli.add_command(find)
 cli.add_command(build)
-
-JENKINS_HOST_ADDR = "http://18.237.198.223:8080"
-
-JENKINS_USER = os.environ['JENKINS_USER']
-JENKINS_PASSWORD = os.environ['JENKINS_PASSWORD']
-server = jenkins.Jenkins(JENKINS_HOST_ADDR, username=JENKINS_USER, password=JENKINS_PASSWORD)
-jobs = server.get_jobs(view_name='All')
 
 def list_job_by_keyword(keyword):
     list_jobs = []
