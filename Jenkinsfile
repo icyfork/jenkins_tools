@@ -14,9 +14,8 @@ pipeline {
     stage('Test') {
       steps {
         sh """
-          sudo docker run -it -e JENKINS_USER=admin -e JENKINS_PASSWORD=74ad002863b64d54aec63cb95e690490 jenkins-tools find test_keyword
-          cd /go/src/sample-app
-          go test
+          sudo docker run -it -e JENKINS_USER=$JENKINS_USER -e JENKINS_PASSWORD=$JENKINS_PASSWORD jenkins-tools find test_keyword > response
+          cat response
         """
       }
     }
@@ -24,6 +23,7 @@ pipeline {
       // Production branch
       when { branch 'master' }
       steps{
+        sh "echo Deploy production"
       }
     }
     stage('Deploy Dev') {
@@ -32,6 +32,7 @@ pipeline {
         not { branch 'master' } 
       } 
       steps {
+        sh "echo Deploy dev"
       }     
     }
   }
