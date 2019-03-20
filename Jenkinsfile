@@ -11,8 +11,8 @@ pipeline {
           docker { image 'docker:stable-git' }
       }
       steps {
-        sh "sudo docker build -t ${imageTag} ."
-        sh "sudo docker push ${imageTag}"
+        sh "docker build -t ${imageTag} ."
+        sh "docker push ${imageTag}"
       }
     }
     stage('Test') {
@@ -21,7 +21,7 @@ pipeline {
       }
       steps {
         sh """
-          sudo docker run -it -e JENKINS_USER=$JENKINS_USER -e JENKINS_PASSWORD=$JENKINS_PASSWORD jenkins-tools find test_keyword > response
+          docker run -it -e JENKINS_USER=$JENKINS_USER -e JENKINS_PASSWORD=$JENKINS_PASSWORD jenkins-tools find test_keyword > response
           cat response
         """
       }
