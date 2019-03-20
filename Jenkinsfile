@@ -4,15 +4,21 @@ def  feSvcName = "${appName}"
 def  imageTag = "pdkhai/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
-  agent any
+  agent none
   stages {
     stage('Build and push image with Container Builder') {
+      agent {
+          docker { image 'docker:stable-git' }
+      }
       steps {
         sh "sudo docker build -t ${imageTag} ."
         sh "sudo docker push ${imageTag}"
       }
     }
     stage('Test') {
+      agent {
+          docker { image 'docker:stable-git' }
+      }
       steps {
         sh """
           sudo docker run -it -e JENKINS_USER=$JENKINS_USER -e JENKINS_PASSWORD=$JENKINS_PASSWORD jenkins-tools find test_keyword > response
