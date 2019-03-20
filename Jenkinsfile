@@ -1,6 +1,6 @@
 def project = ' dev_deploy_tools'
 def  appName = 'jenkins-tools'
-def  feSvcName = "${appName}-frontend"
+def  feSvcName = "${appName}"
 def  imageTag = "pdkhai/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
