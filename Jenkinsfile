@@ -5,6 +5,9 @@ def  imageTag = "pdkhai/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
   agent any
+  environment {
+      JENKINS_CREDS = credentials('jenkins-creds')
+  }
   stages {
     stage('Build and push image with Container Builder') {
       // agent {
@@ -21,7 +24,7 @@ pipeline {
       // }
       steps {
         sh """
-          docker run -it -e JENKINS_USER=$JENKINS_USER -e JENKINS_PASSWORD=$JENKINS_PASSWORD jenkins-tools find test_keyword > response
+          docker run -it -e JENKINS_USER=$JENKINS_CREDS_USR -e JENKINS_PASSWORD=$JENKINS_CREDS_PWD jenkins-tools find test_keyword > response
           cat response
         """
       }
