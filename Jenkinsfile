@@ -5,13 +5,9 @@ def  imageTag = "pdkhai/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
 pipeline {
   agent none
-  environment {
-    DOCKER_HUB_CREDS = credentials('docker-hub-credentials')
-  }
   stages {
     stage('Build and push image with Container Builder') {
       steps {
-        sh "docker login --username $DOCKER_HUB_CREDS_USR --password $DOCKER_HUB_CREDS_PWD"
         sh "docker build -t ${imageTag} ."
         sh "docker push ${imageTag}"
       }
