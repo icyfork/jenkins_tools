@@ -24,7 +24,7 @@ pipeline {
       // }
       steps {
         sh """
-          docker run -it -e JENKINS_USER=$JENKINS_CREDS_USR -e JENKINS_PASSWORD=$JENKINS_CREDS_PWD jenkins-tools find test_keyword > response
+          docker run -it -e JENKINS_USER=$JENKINS_CREDS_USR -e JENKINS_PASSWORD=$JENKINS_CREDS_PSW jenkins-tools find test_keyword > response
           cat response
         """
       }
