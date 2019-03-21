@@ -23,7 +23,7 @@ pipeline {
       //     docker { image 'docker:stable-git' }
       // }
       steps {
-        sh "docker run -it -e JENKINS_USER=$JENKINS_CREDS_USR -e JENKINS_PASSWORD=$JENKINS_CREDS_PSW ${imageTag} find test_keyword"
+        sh "docker run -e JENKINS_USER=$JENKINS_CREDS_USR -e JENKINS_PASSWORD=$JENKINS_CREDS_PSW ${imageTag} find test_keyword"
       }
     }
     stage('Deploy Production') {
