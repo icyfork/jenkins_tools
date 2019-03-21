@@ -30,10 +30,11 @@ pipeline {
       // Production branch
       when { branch 'master' }
       steps{
-        sh "echo Deploy production"
+        sh """echo Deploy production
         kubectl apply -f secret.yml
         kubectl apply -f service/development.yml
         kubectl apply -f development/development.yml
+        """
       }
     }
     stage('Deploy Dev') {
@@ -42,10 +43,11 @@ pipeline {
         not { branch 'master' }
       }
       steps {
-        sh "echo Deploy dev"
+        sh """echo Deploy dev
         kubectl apply -f secret.yml
         kubectl apply -f service/production.yml
         kubectl apply -f production/production.yml
+        """
       }
     }
   }
