@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: jenkins-tools-development
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: tools
+      labels:
+        app: jenkins-tools
+        env: development
+    spec:
+      containers:
+      - name: jenkins-tools
+        image: pdkhai/jenkins-tools:latest
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "100m"
+        env:
+        - name: JENKINS_USER
+          valueFrom:
+            secretKeyRef:
+              name: test-secret
+              key: username
+        - name: JENKINS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: test-secret
+              key: password
